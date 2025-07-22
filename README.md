@@ -2,6 +2,10 @@
 
 Este é um projeto de API REST para gerenciamento de tarefas e comentários, construído com NestJS, Prisma e PostgreSQL, containerizado com Docker.
 
+## Utilização de IA
+- No backend a IA utilizada foi o CURSOR, usei ele para gerar as docs do projeto, além de criar os testes unitários do projeto.
+- Facilitou no desenvolvimento de services, repositories e dto. Além de ajudar em alguns debugs de erros.
+
 ## 🚀 Tecnologias
 
 - [NestJS](https://nestjs.com/)
