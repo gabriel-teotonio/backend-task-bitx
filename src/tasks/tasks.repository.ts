@@ -9,7 +9,11 @@ export class TasksRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll() {
-    return this.prisma.task.findMany();
+    return this.prisma.task.findMany({
+      include: {
+        comments: true,
+      },
+    });
   }
 
   async create(data: CreateTaskDto) {

@@ -23,6 +23,14 @@ async function bootstrap() {
     }),
   );
 
+  // CORS
+  app.enableCors({
+    origin: '*', // TODO: ajustar para o frontend local
+    credentials: true, 
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  });
+
   // Swagger setup
   const config = new DocumentBuilder()
     .setTitle('Tasks API')
