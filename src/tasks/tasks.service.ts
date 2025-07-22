@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { TasksRepository } from './tasks.repository';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { Status } from 'generated/prisma';
+import { Status } from '@prisma/client';
+import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 
 @Injectable()
 export class TasksService {
@@ -20,8 +21,8 @@ export class TasksService {
     return this.tasksRepository.update(id, updateTaskDto);
   }
 
-  updateStatus(id: number, status: Status) {
-    return this.tasksRepository.updateStatus(id, status);
+  updateStatus(id: number, updateTaskStatusDto: UpdateTaskStatusDto) {
+    return this.tasksRepository.updateStatus(id, updateTaskStatusDto.status);
   }
 
   remove(id: number) {

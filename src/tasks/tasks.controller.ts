@@ -2,7 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
-import { Status } from 'generated/prisma';
+import { Status } from '@prisma/client';
+import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 
 @Controller('tasks')
 export class TasksController {
@@ -24,8 +25,8 @@ export class TasksController {
   }
 
   @Patch(':id/status')
-  updateStatus(@Param('id') id: string, @Body('status') status: Status) {
-    return this.tasksService.updateStatus(+id, status);
+  updateStatus(@Param('id') id: string, @Body() updateTaskStatusDto: UpdateTaskStatusDto) {
+    return this.tasksService.updateStatus(+id, updateTaskStatusDto);
   }
 
   @Delete(':id')
