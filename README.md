@@ -1,6 +1,6 @@
 # Task Management API
 
-Este é um projeto de API REST para gerenciamento de tarefas construído com NestJS, Prisma e PostgreSQL, containerizado com Docker.
+Este é um projeto de API REST para gerenciamento de tarefas e comentários, construído com NestJS, Prisma e PostgreSQL, containerizado com Docker.
 
 ## 🚀 Tecnologias
 
@@ -9,6 +9,7 @@ Este é um projeto de API REST para gerenciamento de tarefas construído com Nes
 - [PostgreSQL](https://www.postgresql.org/)
 - [Docker](https://www.docker.com/)
 - [TypeScript](https://www.typescriptlang.org/)
+- [Swagger](https://swagger.io/) (documentação automática)
 
 ## 📋 Pré-requisitos
 
@@ -27,10 +28,10 @@ Antes de começar, você precisa ter instalado em sua máquina:
 
 2. Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
    ```env
-   DATABASE_URL=postgres://postgres:postgres@db:5432/taskbitx
+   DATABASE_URL="postgresql://postgres:postgres@db:5432/tasksdb?schema=public"
    POSTGRES_USER=postgres
    POSTGRES_PASSWORD=postgres
-   POSTGRES_DB=taskbitx
+   POSTGRES_DB=tasksdb
    ```
 
 3. Execute o projeto com Docker Compose:
@@ -45,14 +46,30 @@ Antes de começar, você precisa ter instalado em sua máquina:
    docker compose down
    ```
 
+## 📚 Documentação da API (Swagger)
+
+Após subir a aplicação, acesse a documentação interativa em:
+
+```
+http://localhost:3000/api
+```
+
+Lá você pode testar todos os endpoints, ver exemplos de payloads e schemas.
+
 ## 📝 Endpoints da API
 
 ### Tasks
 - `GET /tasks` - Lista todas as tarefas
-- `GET /tasks/:id` - Busca uma tarefa específica
 - `POST /tasks` - Cria uma nova tarefa
 - `PATCH /tasks/:id` - Atualiza uma tarefa
+- `PATCH /tasks/:id/status` - Atualiza apenas o status da tarefa
 - `DELETE /tasks/:id` - Remove uma tarefa
+
+### Comments
+- `GET /comments?taskId=1` - Lista comentários de uma tarefa
+- `POST /comments` - Cria um comentário para uma tarefa
+- `PATCH /comments/:id` - Atualiza um comentário
+- `DELETE /comments/:id` - Remove um comentário
 
 ## 🛠️ Desenvolvimento
 
@@ -63,7 +80,7 @@ Se você quiser rodar o projeto em modo de desenvolvimento:
    npm install
    ```
 
-2. Gere o cliente Prisma:
+2. Gere o client Prisma:
    ```bash
    npx prisma generate
    ```
@@ -83,20 +100,30 @@ Se você quiser rodar o projeto em modo de desenvolvimento:
 - `npm run start:dev` - Roda o projeto em modo de desenvolvimento
 - `npm run build` - Compila o projeto
 - `npm run start:prod` - Roda o projeto em modo de produção
-- `npm run test` - Executa os testes
+- `npm run test` - Executa os testes unitários
 - `npm run test:e2e` - Executa os testes end-to-end
+- `npm run test:cov` - Gera o relatório de cobertura de testes
+
+## 🧩 Estrutura do Projeto
+
+- `src/tasks` - Domínio de tarefas (controllers, services, repository, DTOs)
+- `src/comments` - Domínio de comentários
+- `src/prisma` - Serviço de integração com o Prisma
+- `prisma/schema.prisma` - Definição do modelo de dados
+
+O projeto segue princípios de Clean Architecture, separando regras de negócio, acesso a dados e exposição de rotas.
+
+## 🧪 Testes
+
+Para rodar os testes:
+```bash
+npm run test         # Testes unitários
+npm run test:e2e     # Testes end-to-end
+npm run test:cov     # Cobertura de testes
+```
 
 ## 📄 Licença
 
 Este projeto está sob a licença MIT - veja o arquivo [LICENSE.md](LICENSE.md) para detalhes
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
